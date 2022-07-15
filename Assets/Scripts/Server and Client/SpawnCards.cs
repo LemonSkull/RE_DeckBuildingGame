@@ -6,6 +6,7 @@ using Photon.Pun;
 public class SpawnCards : MonoBehaviour
 {
     public int cardCount, handCards;
+    private int cardNumberCount; //Helps find parent when using PNCardsPrefab
     public GameObject CardPrefab, PNCardPrefab, PlayerDeck;
     public List<GameObject> Deck;
     public List<GameObject> HandCards;
@@ -27,6 +28,7 @@ public class SpawnCards : MonoBehaviour
     void Start()
     {
         view = GetComponent<PhotonView>();
+
     }
 
     public void DrawCard() //Button
@@ -56,18 +58,23 @@ public class SpawnCards : MonoBehaviour
             cardSpawn.GetComponent<SpriteRenderer>().sprite = render;
 
             Instantiate(cardSpawn, pos, Quaternion.identity);
+            cardSpawn.GetComponent<dragndrop>().cardNumber = cardNumberCount;
             //PhotonNetwork.Instantiate(cardSpawn.name, pos, Quaternion.identity);
 
             cardCount--;
             Deck.Remove(Deck[0]);
         }
     }
+
     public GameObject SpawnPNCardPrefab(GameObject other, Vector2 pos)
     {
-            SpriteRenderer rend = other.GetComponent<SpriteRenderer>();
-            GameObject pnObj = PhotonNetwork.Instantiate(PNCardPrefab.name, pos, Quaternion.identity);
-            pnObj.GetComponent<SpriteRenderer>().sprite = rend.sprite;
-            return pnObj;
+        //SpriteRenderer rend = other.GetComponent<SpriteRenderer>();
+        GameObject pnObj = PhotonNetwork.Instantiate(PNCardPrefab.name, pos, Quaternion.identity);
+        //pnObj.GetComponent<SpriteRenderer>().sprite = rend.sprite;
+
+        pnObj.GetComponent<ShowCardToOthers>().SetAsParent(other);
+        
+        return pnObj;
 
     }
 

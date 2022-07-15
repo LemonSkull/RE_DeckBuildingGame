@@ -8,7 +8,8 @@ public class dragndrop : MonoBehaviour
     //private Camera cam;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRend;
-    [SerializeField]
+    //[SerializeField]
+    public int cardNumber;
     private Vector2 spawnPos, cardPos;
     public GameObject MoveBlocker, SpawnCards;
     [SerializeField]//TESTING
@@ -27,6 +28,8 @@ public class dragndrop : MonoBehaviour
         spriteRend = GetComponent<SpriteRenderer>();
         cardPos = gameObject.transform.position;
         spawnPos = cardPos;
+
+        gameObject.name = "playerCard_" + cardNumber.ToString();
         
     }
     private void Start()
@@ -34,7 +37,10 @@ public class dragndrop : MonoBehaviour
         //view = GetComponent<PhotonView>();
 
     }
-
+    public int GetCardNumber()
+    {
+        return cardNumber;
+    }
 
     void OnMouseDrag()
     {

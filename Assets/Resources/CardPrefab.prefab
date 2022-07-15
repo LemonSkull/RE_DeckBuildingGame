@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: c2e567e08536a304d97a15e08668dbf7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e49b7a55bb07df846b705b3e78d40a21, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -125,8 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e7dbc671d22a3642bd2ef70c7556f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPos: {x: 0, y: 0}
-  cardPos: {x: 0, y: 0}
+  cardNumber: 0
   MoveBlocker: {fileID: 6941085678159595751, guid: 2e271bf823e79c744aed7dcb14b0e66c, type: 3}
   SpawnCards: {fileID: 499371041884646771, guid: 0237adbe8dbc52e4089394a76bca56b0, type: 3}
   PNChildCard: {fileID: 0}
