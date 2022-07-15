@@ -6,11 +6,12 @@ using Photon.Pun;
 public class SpawnCards : MonoBehaviour
 {
     public int cardCount, handCards;
-    public GameObject CardPrefab, PlayerDeck;
+    public GameObject CardPrefab, PNCardPrefab, PlayerDeck;
     public List<GameObject> Deck;
     public List<GameObject> HandCards;
     public List<GameObject> DiscardPileCards;
-    float posX = -4, posY = -2;
+
+    float posX = -5, posY = -2;
     PhotonView view;
 
     void Awake()
@@ -39,11 +40,11 @@ public class SpawnCards : MonoBehaviour
             if(posX>6f&& posY==-2)
             {
                 posX = -5;
-                posY = -4;
+                posY = -3.5f;
             }
             else if (posX>6&& posY==-4)
             {
-                posX = -4;
+                posX = -3.5f;
                 posY = -2;
             }
 
@@ -54,12 +55,23 @@ public class SpawnCards : MonoBehaviour
 
             cardSpawn.GetComponent<SpriteRenderer>().sprite = render;
 
-            PhotonNetwork.Instantiate(cardSpawn.name, pos, Quaternion.identity);
+            Instantiate(cardSpawn, pos, Quaternion.identity);
+            //PhotonNetwork.Instantiate(cardSpawn.name, pos, Quaternion.identity);
 
             cardCount--;
             Deck.Remove(Deck[0]);
         }
     }
+    public GameObject SpawnPNCardPrefab(GameObject other, Vector2 pos)
+    {
+            SpriteRenderer rend = other.GetComponent<SpriteRenderer>();
+            GameObject pnObj = PhotonNetwork.Instantiate(PNCardPrefab.name, pos, Quaternion.identity);
+            pnObj.GetComponent<SpriteRenderer>().sprite = rend.sprite;
+            return pnObj;
+
+    }
+
+
     public void DeletePhotonCard(GameObject obj)
     {
 

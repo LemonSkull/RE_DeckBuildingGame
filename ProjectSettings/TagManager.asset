@@ -11,6 +11,8 @@ TagManager:
   - holdingCard
   - notHoldingCard
   - moveBlocker
+  - cardPrefab
+  - pnCardPrefab
   layers:
   - Default
   - TransparentFX

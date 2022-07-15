@@ -1,68 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
+//using Photon.Pun;
 
 public class dragndrop : MonoBehaviour
 {
-    private Camera cam;
+    //private Camera cam;
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRend;
     [SerializeField]
     private Vector2 spawnPos, cardPos;
-    public GameObject MoveBlocker;
-    PhotonView view;
-    public bool isMyTurn;
-    private bool isOnHolder;
+    public GameObject MoveBlocker, SpawnCards;
+    [SerializeField]//TESTING
+    private GameObject PNChildCard;
+    //PhotonView view;
+    Vector2 mousePosition;
+    private int minX=-7, maxX=7, minY=-3, maxY=4, pnLimitY=-1;
+    private bool CardVisibleToOthers;
 
     void Awake()
     {
-        cam = Camera.main;
+        CardVisibleToOthers = false;
+        //cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
+        spriteRend = GetComponent<SpriteRenderer>();
         cardPos = gameObject.transform.position;
         spawnPos = cardPos;
-        isMyTurn = true; //TESTING 1PLAYER
-        isOnHolder = false;
+        
     }
     private void Start()
     {
-        view = GetComponent<PhotonView>();
-
-
-    }
-    public void CheckViewBlocker()
-    {
-        if (view.IsMine)
-        {
-            MoveBlocker.SetActive(false);
-        }
-        else
-            MoveBlocker.SetActive(true);
-
+        //view = GetComponent<PhotonView>();
 
     }
 
-
-    public void MyTurn(bool myTurn)
-    {
-        if(myTurn)
-        {
-            isMyTurn = true;
-        }
-        else
-        {
-            isMyTurn = false;
-        }
-    }
 
     void OnMouseDrag()
     {
-        if(isMyTurn)
-        if (view.IsMine)
+        //if(isMyTurn)
+        //if (view.IsMine)
         {
-            //rb.bodyType = RigidbodyType2D.Static;
+            rb.bodyType = RigidbodyType2D.Static;
             transform.position = GetMousePos();
             transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            spriteRend.sortingOrder = 6;
         }
     }
 
@@ -70,27 +52,58 @@ public class dragndrop : MonoBehaviour
     {
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0; //koska 2d peli
+        mousePosition = new Vector2(mousePos.x, mousePos.y);
         return mousePos;
     }
     void OnMouseUp()
     {
-        if (isMyTurn)
+        //if (isMyTurn)
             //if (view.IsMine)
             {
-                if (transform.position.y <= -1.3)
-                    cardPos = spawnPos;
+            
+            rb.bodyType = RigidbodyType2D.Dynamic;
 
+
+            if (mousePosition.x <= minX || mousePosition.x >= maxX
+                || mousePosition.y <= minY || mousePosition.y >= maxY){
 
                 transform.position = cardPos;
+
+            }
+            else if (mousePosition.y <= pnLimitY)
+            {
+                transform.position = cardPos;
+
+            }
+            else if (mousePosition.y >= pnLimitY) //Instantiate PNPrefab (other players see it)
+            {
+                if (!CardVisibleToOthers)
+                {
+                    Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+                    PNChildCard = SpawnCards.GetComponent<SpawnCards>().SpawnPNCardPrefab(gameObject, pos);
+                    CardVisibleToOthers = true;
+                }
+                else
+                {
+                    Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+                    PNChildCard.GetComponent<ShowCardToOthers>().ParentCardPosition(pos);
+                }
+
+                
+            }
+                spriteRend.sortingOrder = 5;
                 transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
             }
     }
 
 
+
+
+    /*
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (isMyTurn)
-        //if (view.IsMine)
+        //if (isMyTurn)
+        
         {
             if (other.gameObject.tag == "notHoldingCard")
                 if (other.gameObject.layer == 7) //Card Holders
@@ -98,7 +111,7 @@ public class dragndrop : MonoBehaviour
                     cardPos = other.transform.position;
                     isOnHolder = true;
                     other.gameObject.tag = "holdingCard";
-                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    
                 }
                 else if (other.gameObject.tag == "HoldingCard")
                 {
@@ -107,7 +120,7 @@ public class dragndrop : MonoBehaviour
                 }
         }
     }
-
+    */
     /*
     void OnTriggerExit2D(Collider2D other)
     {

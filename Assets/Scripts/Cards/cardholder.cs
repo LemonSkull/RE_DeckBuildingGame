@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class cardholder : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool mousePressed;
+
+    void OnMouseDown()
     {
-        
+        mousePressed = true;
+
+    }
+    void OnMouseUp()
+    {
+        mousePressed = false;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if(mousePressed)
+        if(other.gameObject.tag=="cardPrefab")
+            {
+
+
+            }
+
+
     }
+
+
+
 }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4773596589064385107}
   - component: {fileID: 4773596589064385104}
   - component: {fileID: 4773596589064385116}
-  - component: {fileID: 5943415802320285018}
   m_Layer: 6
   m_Name: CardPrefab
   m_TagString: unactiveCard
@@ -77,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: e49b7a55bb07df846b705b3e78d40a21, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c2e567e08536a304d97a15e08668dbf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -112,7 +111,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 1.4, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &4773596589064385104
 MonoBehaviour:
@@ -128,8 +127,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPos: {x: 0, y: 0}
   cardPos: {x: 0, y: 0}
-  MoveBlocker: {fileID: 0}
-  isMyTurn: 0
+  MoveBlocker: {fileID: 6941085678159595751, guid: 2e271bf823e79c744aed7dcb14b0e66c, type: 3}
+  SpawnCards: {fileID: 499371041884646771, guid: 0237adbe8dbc52e4089394a76bca56b0, type: 3}
+  PNChildCard: {fileID: 0}
 --- !u!50 &4773596589064385116
 Rigidbody2D:
   serializedVersion: 4
@@ -151,25 +151,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5943415802320285018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4773596589064385111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
