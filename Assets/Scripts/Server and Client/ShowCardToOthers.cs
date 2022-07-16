@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 
 public class ShowCardToOthers : MonoBehaviour
@@ -9,49 +10,52 @@ public class ShowCardToOthers : MonoBehaviour
     PhotonView view;
     [SerializeField]//TEST
     private GameObject parentObject;
-    private SpriteRenderer rend;
+    public Canvas MainCanvas;
+    //private SpriteRenderer rend;
     private Sprite sprt;
     private Vector2 pnCardPos; //Photon Network position
     Rigidbody2D rb;
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        GameObject canvasObj = GameObject.FindWithTag("MainCanvas");
+        MainCanvas = canvasObj.GetComponent<Canvas>();
+        gameObject.transform.SetParent(MainCanvas.transform);
+        transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+    }
     void Start()
     {
-        rend = GetComponent<SpriteRenderer>();
-        sprt = rend.sprite;
+        //rend = GetComponent<SpriteRenderer>();
+        //sprt = rend.sprite;
         pnCardPos = gameObject.transform.position;
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
         view = GetComponent<PhotonView>();
+        /*
         if (view.IsMine) //Only other players see this object
         {
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            //gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
         }
+        /*
         if (sprt == null)
         {
-            GetComponent<SpriteRenderer>().sprite = parentObject.GetComponent<SpriteRenderer>().sprite;
+            string sprtName = "ammo10";
+            GetComponent<SpriteFromAtlas>().spriteName = sprtName;
+            //GetComponent<SpriteRenderer>().sprite = parentObject.GetComponent<SpriteRenderer>().sprite;
             Debug.Log("No sprite -> sprite changed");
         }
+        */
     }
 
-    public void SetAsParent(GameObject parent)
-    {
-        parentObject = parent;
-        //DisplayCardChanges();
-    }
-    public void ChangeSprite(Sprite getSprite)
-    {
-        sprt = getSprite;
 
-    }
 
-    [PunRPC]
-    void DisplayCardChanges()
-    {
-        //sprt = parentObject.GetComponent<SpriteRenderer>().sprite;
-        Debug.Log("Sprite changed!");
-    }
+
+
+
+
+
 
     void OnMouseDrag()
     {

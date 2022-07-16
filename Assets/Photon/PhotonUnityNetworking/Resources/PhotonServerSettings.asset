@@ -43,6 +43,16 @@ MonoBehaviour:
   - DisplayCardChanges
   - SetAsParent
   - SpawnPNCardPrefab
+  - RPC_ChangeImage
+  - DragHandler
+  - RPC_PointerExit
+  - DestroyWaitingRoom
+  - SetLobbyPlayersData
+  - PlayerEnters
+  - AddPlayersToList
+  - UpdatePlayerListTMP
+  - SetNickName
+  - SendNewPlayerInfo
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

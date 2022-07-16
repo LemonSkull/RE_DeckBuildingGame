@@ -6,11 +6,13 @@ using Photon.Pun;
 public class SpawnCards : MonoBehaviour
 {
     public int cardCount, handCards;
-    private int cardNumberCount; //Helps find parent when using PNCardsPrefab
     public GameObject CardPrefab, PNCardPrefab, PlayerDeck;
+    //public GameObject ItemCards;
     public List<GameObject> Deck;
     public List<GameObject> HandCards;
     public List<GameObject> DiscardPileCards;
+
+    public string currentCard;
 
     float posX = -5, posY = -2;
     PhotonView view;
@@ -28,7 +30,7 @@ public class SpawnCards : MonoBehaviour
     void Start()
     {
         view = GetComponent<PhotonView>();
-
+        currentCard = "ammo10";
     }
 
     public void DrawCard() //Button
@@ -50,17 +52,24 @@ public class SpawnCards : MonoBehaviour
                 posY = -2;
             }
 
-                pos = new Vector2(posX += 1.5f, posY);
+            pos = new Vector2(posX += 1.5f, posY);
 
+            
             GameObject cardSpawn = CardPrefab;
             var render = Deck[0].GetComponent<SpriteRenderer>().sprite;
 
-            cardSpawn.GetComponent<SpriteRenderer>().sprite = render;
+            //cardSpawn.GetComponent<SpriteRenderer>().sprite = render;
+            //Instantiate(cardSpawn, pos, Quaternion.identity);
+            PhotonNetwork.InstantiateRoomObject(cardSpawn.name, pos, Quaternion.identity);
 
-            Instantiate(cardSpawn, pos, Quaternion.identity);
-            cardSpawn.GetComponent<dragndrop>().cardNumber = cardNumberCount;
-            //PhotonNetwork.Instantiate(cardSpawn.name, pos, Quaternion.identity);
+            /*
+            GameObject cardSpawn = ItemCards;
 
+            //cardSpawn.GetComponent<SpriteFromAtlas>().SetCardSprite("FirstAidKit");
+
+            //cardSpawn.transform.SetParent(GameObject.Find("MainCanvas").transform);
+            PhotonNetwork.InstantiateRoomObject(cardSpawn.name, pos, Quaternion.identity);
+            */
             cardCount--;
             Deck.Remove(Deck[0]);
         }
@@ -72,7 +81,7 @@ public class SpawnCards : MonoBehaviour
         GameObject pnObj = PhotonNetwork.Instantiate(PNCardPrefab.name, pos, Quaternion.identity);
         //pnObj.GetComponent<SpriteRenderer>().sprite = rend.sprite;
 
-        pnObj.GetComponent<ShowCardToOthers>().SetAsParent(other);
+        //pnObj.GetComponent<ShowCardToOthers>().SetAsParent(other);
         
         return pnObj;
 
