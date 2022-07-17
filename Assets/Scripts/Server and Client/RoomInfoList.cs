@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
-using Photon.Realtime;
+//using Photon.Realtime;
 //using TMPro;
 
 public class RoomInfoList : MonoBehaviour
@@ -36,16 +36,8 @@ public class RoomInfoList : MonoBehaviour
         }
 
     }
-    void Start()
-    {
-        if (JoinedPlayerList.Count == 0)
-        {
-            JoinedPlayerList.Add(PlayerPrefs.GetString("NickName"));
-            //playerListTMPObject.GetComponent<PlayerListTMP>().AddJoinedPlayerToList(JoinedPlayerList[0]); //ADD HOST
-        }
-    }
 
-    public void AddToJoinedPlayerList(string playerName)
+    public void AddToJoinedPlayerList(string playerName) //NOT IN USE RN
     {
         JoinedPlayerList.Add(playerName);
 

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
+    /*
     public GameObject PlayerInfoObj;//TEST
 
     public void OnClickChooseCharacterCard(int whichCharacter)
@@ -21,12 +22,12 @@ public class MenuController : MonoBehaviour
         int val = Random.Range(0, maxCharacters);
         PlayerPrefs.SetInt("MyCharacterCard", val);
     }
-
+    */
     public void OnClickGoToGameScene()
     {
-        int allCharCount = PlayerInfoObj.GetComponent<PlayerInfo>().allCharacters.Count;
+        //int allCharCount = PlayerInfoObj.GetComponent<PlayerInfo>().allCharacters.Count;
 
-        ChooseRandomCharacterCard(allCharCount);//TEST
+        //ChooseRandomCharacterCard(allCharCount);//TEST
         SceneManager.LoadScene("Game");
     }
 }

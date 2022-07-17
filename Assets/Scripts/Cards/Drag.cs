@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class Drag : MonoBehaviour
 {
     [SerializeField]
+    private GameObject MainCanvas;
     private Canvas canvas;
     private PhotonView view;
     [SerializeField]
@@ -23,8 +24,10 @@ public class Drag : MonoBehaviour
         if(canvas == null)
         {
             //canvas = GetComponent<ShowCardToOthers>().MainCanvas;
-            GameObject canvasObj = GameObject.FindWithTag("MainCanvas");
-            canvas = canvasObj.GetComponent<Canvas>();
+            //GameObject canvasObj = GameObject.FindWithTag("MainCanvas");
+            MainCanvas = gameObject.transform.parent.gameObject;
+            canvas = MainCanvas.GetComponent<Canvas>();
+            Debug.Log("MainCanvas =" + MainCanvas + "inDrag.cs");
         }
     }
     void Start()
@@ -32,6 +35,11 @@ public class Drag : MonoBehaviour
         view = GetComponent<PhotonView>();
         lastPos = transform.position;
 
+        //view = PhotonView.Find(1); //MainCanvas -> error when pointerExit;
+
+        isVisible = true;
+
+        /* //NOT IN USE RN
         if (view.IsMine)
         {
             isVisible = true;
@@ -42,15 +50,15 @@ public class Drag : MonoBehaviour
             isVisible = false;
             GetComponent<Image>().color = new Color32(0, 0, 0, 100);
         }
+        */
         cardPosition = transform.position;
-
     }
 
 
     [PunRPC]
     public void DragHandler(BaseEventData data)
     {
-        if (view.IsMine)
+        //if (view.IsMine) //TESTING WHEN OFF
         {
             PointerEventData pointerData = (PointerEventData)data;
 
@@ -90,7 +98,7 @@ public class Drag : MonoBehaviour
             {
                 
                 //view.RPC("changeImage", PhotonTargets);
-                view.RPC("RPC_ChangeImage", RpcTarget.AllBuffered);
+                //view.RPC("RPC_ChangeImage", RpcTarget.AllBuffered);
             }
         }
 

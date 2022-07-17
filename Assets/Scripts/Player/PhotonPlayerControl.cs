@@ -4,9 +4,9 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class PhotonPlayerControl : MonoBehaviourPunCallbacks
+public class PhotonPlayerControl : MonoBehaviourPunCallbacks //NOT IN USE
 {
-    public static PhotonPlayerControl PPC { get; private set; }
+    //public static PhotonPlayerControl PPC { get; private set; }
 
     public int PlayerID;
     private GameObject MainCamera;
@@ -15,6 +15,7 @@ public class PhotonPlayerControl : MonoBehaviourPunCallbacks
 
     void Awake()
     {
+        /*
         if (PPC != null && PPC != this)
         {
             Destroy(this);
@@ -23,6 +24,7 @@ public class PhotonPlayerControl : MonoBehaviourPunCallbacks
         {
             PPC = this;
         }
+        */
     }
 
     void OnEnable()
@@ -30,8 +32,6 @@ public class PhotonPlayerControl : MonoBehaviourPunCallbacks
         MainCamera = GameObject.FindWithTag("MainCamera");
 
         view = MainCamera.GetComponent<PhotonView>();
-
-
 
     }
 

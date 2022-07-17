@@ -10,15 +10,16 @@ public class GameRoomControl : MonoBehaviourPunCallbacks
     public GameObject SpawnCardsPrefab;
     private GameObject MainSpawnCards;
 
+    [SerializeField] private int whoIsPlaying, playerCount; //IN USE
+
     // Start is called before the first frame update
     void Awake()
     {
         view = GetComponent<PhotonView>();
 
-        if(view.IsMine)
-        {
-            MainSpawnCards = PhotonNetwork.Instantiate(SpawnCardsPrefab.name, new Vector3(0f,0f,0f), Quaternion.identity);
-        }
+
+        MainSpawnCards = PhotonNetwork.Instantiate(SpawnCardsPrefab.name, new Vector3(0f,0f,0f), Quaternion.identity);
+
 
     }
 
@@ -29,5 +30,31 @@ public class GameRoomControl : MonoBehaviourPunCallbacks
         Debug.Log("DrawCard from GameRoomControl");
     }
 
+    public void OnClickTransferOwnershipToNextPlayer() //NOT WORKING
+    {
+        if (view.IsMine)
+        {
+            int playercount = 0;
 
+            foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                playercount++;
+
+            }
+            //playercount--;
+
+            if (whoIsPlaying > playercount)
+            {
+                whoIsPlaying = 0;
+                Debug.Log("New Round!");
+            }
+            else
+                whoIsPlaying++;
+
+            Debug.Log("playercount=" + playercount);
+            Debug.Log("whoIsPlaying=" + whoIsPlaying);
+            view.TransferOwnership(1);
+
+        }
+    }
 }

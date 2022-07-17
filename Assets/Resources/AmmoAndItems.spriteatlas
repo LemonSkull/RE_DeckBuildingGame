@@ -31,30 +31,13 @@ SpriteAtlas:
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
-    packables:
-    - {fileID: 102900000, guid: b2354cca097c58a4a8bbb9c687daa9cf, type: 3}
+    packables: []
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites:
-  - {fileID: 21300000, guid: e49b7a55bb07df846b705b3e78d40a21, type: 3}
-  - {fileID: 21300000, guid: 0c8fef06455738e4e8f4f82f1e55c5e0, type: 3}
-  - {fileID: 21300000, guid: 3710a02886936144b85edefc95c78aca, type: 3}
-  - {fileID: 21300000, guid: 78ca876805ad9db4c87cb37fe57ad868, type: 3}
-  - {fileID: 21300000, guid: e50ec07876dfd9a4e8a3a1187c446d02, type: 3}
-  - {fileID: 21300000, guid: 4addfec96c0aec04a81563636120bbb0, type: 3}
-  - {fileID: 21300000, guid: 5c80c21a6d160674c86e3719c2e27701, type: 3}
-  - {fileID: 21300000, guid: d3da318b6ab3fe744adddb1a59798c14, type: 3}
-  m_PackedSpriteNamesToIndex:
-  - ammo10
-  - herbRed
-  - herbGreen
-  - treasure
-  - ammo20
-  - ammo30
-  - it-003_premier_first_aid_spray1
-  - firstAidKit
+  m_PackedSprites: []
+  m_PackedSpriteNamesToIndex: []
   m_RenderDataMap: {}
   m_Tag: AmmoAndItems
   m_IsVariant: 0

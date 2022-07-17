@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5134886316638887782}
   m_Layer: 0
   m_Name: CreateAndJoinRooms
-  m_TagString: Untagged
+  m_TagString: characterCards
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,11 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createInput: {fileID: 0}
   joinInput: {fileID: 0}
-  roomName: REDBG
-  playerLimit: 10
-  RoomInfoList: {fileID: 0}
-  MyIndex: 0
-  NickName: 
+  RoomInfoListPrefab: {fileID: 0}
+  PlayerInfoPrefab: {fileID: 3585181069486544940, guid: ab7f85163ec85644e87e06ceebd666f8, type: 3}
+  LobbyRoomControlPrefab: {fileID: 2175248103069380662, guid: bd74dcc03076a2a4795e75653e328169, type: 3}
+  PlayerListTMP: {fileID: 6442989417003545298, guid: a6f0e24cf91158f4b92f20954999a012, type: 3}
 --- !u!114 &5134886316638887782
 MonoBehaviour:
   m_ObjectHideFlags: 0

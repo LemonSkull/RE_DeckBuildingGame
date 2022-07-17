@@ -60,8 +60,8 @@ public class SpawnCards : MonoBehaviour
 
             //cardSpawn.GetComponent<SpriteRenderer>().sprite = render;
             //Instantiate(cardSpawn, pos, Quaternion.identity);
-            PhotonNetwork.InstantiateRoomObject(cardSpawn.name, pos, Quaternion.identity);
-
+            //PhotonNetwork.InstantiateRoomObject(cardSpawn.name, pos, Quaternion.identity);
+            PhotonNetwork.Instantiate(cardSpawn.name, pos, Quaternion.identity);
             /*
             GameObject cardSpawn = ItemCards;
 

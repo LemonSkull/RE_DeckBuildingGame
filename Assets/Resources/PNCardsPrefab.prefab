@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c7fbf7e1d888654abccee840d2058f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
+  MainCanvas: {fileID: 0}
   cardPosition: {x: 0, y: 0}
   lastPos: {x: 0, y: 0}
 --- !u!114 &4573130496020473065

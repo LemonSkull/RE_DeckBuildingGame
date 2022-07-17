@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3585181069486544914}
   - component: {fileID: 3585181069486544915}
-  - component: {fileID: 7264755852382491002}
   - component: {fileID: 567827490546551723}
   m_Layer: 0
   m_Name: PlayerInfo(Singleton)
-  m_TagString: Untagged
+  m_TagString: PlayerInfo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3585181069486544940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -7.25, y: -2.94, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -46,40 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4b9fc8b78fbdb4789849e7fb224b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 0
   id: 
   myCharacterCard: 0
-  allCharacters:
-  - {fileID: 21300000, guid: 06fd1ecee0625e94a89b85e82ba697df, type: 3}
-  - {fileID: 21300000, guid: 4b61b1e1f0a19c34ea8728305d5b9f04, type: 3}
-  - {fileID: 21300000, guid: 5133893639bbdde42975568d3058a842, type: 3}
-  - {fileID: 21300000, guid: f820dc81fc2720340b871dbb27ee0bd6, type: 3}
-  - {fileID: 21300000, guid: efc6affc4ca57ec42aa927015f04fa3b, type: 3}
-  - {fileID: 21300000, guid: c3997e8627d3230458ea2d658c76767e, type: 3}
-  - {fileID: 21300000, guid: aef2ba0be7f9a3e41ac6a1b9b60152a6, type: 3}
-  - {fileID: 21300000, guid: f8dc3f2d3cef2ff4ab1379df61f9f0fd, type: 3}
-  - {fileID: 21300000, guid: 4a78a0c33ed787941bbd84823021959b, type: 3}
---- !u!114 &7264755852382491002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3585181069486544940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  isHost: 0
+  allCharacters: []
+  PlayableCharactersObject: {fileID: 3853105795802087178, guid: a98dfbdd988b3bc4ebc854ee42da952e, type: 3}
 --- !u!212 &567827490546551723
 SpriteRenderer:
   m_ObjectHideFlags: 0

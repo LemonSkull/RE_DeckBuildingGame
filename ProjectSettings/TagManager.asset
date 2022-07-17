@@ -16,6 +16,9 @@ TagManager:
   - MainCanvas
   - PlayerListTMP
   - RoomInfoList
+  - PlayerInfo
+  - characterCards
+  - PlayerInfoMaster
   layers:
   - Default
   - TransparentFX

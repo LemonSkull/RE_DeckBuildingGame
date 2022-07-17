@@ -2,40 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class PlayerInfo : MonoBehaviour //SINGLETON
+
+public class PlayerInfo : MonoBehaviourPunCallbacks //SINGLETON
 {
-    public static PlayerInfo PI;
-
+    public int playerNumber;
     public string id;
     public int myCharacterCard;
+    private SpriteRenderer rend;
 
-    public List<Sprite> allCharacters;
-    //public Sprite[] allCharacters;
+    [SerializeField] private bool isHost;
+    //public List<Sprite> allCharacters;
+    public GameObject PlayableCharactersObject;
 
-    private void OnEnable()
+    private void Awake()
     {
-        if(PlayerInfo.PI == null)
-        {
-            PlayerInfo.PI = this;
-        }
-        else
-        {
-            if(PlayerInfo.PI !=this)
-            {
-                Destroy(PlayerInfo.PI.gameObject);
-                PlayerInfo.PI = this;
-            }
-        }
+        isHost = false;
+
         string currentScene = SceneManager.GetActiveScene().name;
         if(currentScene=="Game"||currentScene == "LobbyRoom")
             DontDestroyOnLoad(this.gameObject);
 
-        CheckCharacter();
+        rend = GetComponent<SpriteRenderer>();
+        rend.enabled = false;
+        //CheckCharacter();
+    }
+    void Start()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            isHost = true;
+            transform.gameObject.tag = "PlayerInfoMaster";
+            GetRandomPlayableCharacterFromList();
+        }
+
+    }
+    public void WhenIsCreated(bool ishost, int playernumb)
+    {
+            playerNumber = playernumb;
+            isHost = ishost;
+
+
     }
 
 
-    void CheckCharacter()
+    void CheckCharacter() //NOT IN USE ATM
     {
         if(PlayerPrefs.HasKey("MyCharacterCard"))
         {
@@ -48,5 +61,13 @@ public class PlayerInfo : MonoBehaviour //SINGLETON
         }
     }
 
+    private void GetRandomPlayableCharacterFromList()
+    {
 
+        int count = PlayableCharactersObject.GetComponent<ListOfCharacters>().CharacterCards.Count;
+        int cardNumber = Random.Range(0,count);
+
+        Sprite sprite = PlayableCharactersObject.GetComponent<ListOfCharacters>().CharacterCards[cardNumber];
+        rend.sprite = sprite;
+    }
 }

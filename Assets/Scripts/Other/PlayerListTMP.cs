@@ -2,44 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 
-public class PlayerListTMP : MonoBehaviour
+public class PlayerListTMP : MonoBehaviourPun
 {
     //private GameObject MainCanvas;
-    private TMP_Text playerListTMP;
+    private TextMeshProUGUI playerListTMP;
     public List<string> JoinedPlayerList;
-    private PhotonView view;
+    private string JoinedPlayers;
+    //private PhotonView view;
 
     void Awake()
     {
         //MainCanvas = GameObject.FindWithTag("MainCanvas");
         playerListTMP = GetComponent<TextMeshProUGUI>();
-        view = GetComponent<PhotonView>();
+        
     }
     void Start()
     {
-        JoinedPlayerList = RoomInfoList.RI.JoinedPlayerList;
+        //view = GetComponent<PhotonView>();
+
     }
-
-
-    public void UpdatePlayerList()
+    public void UpdatePlayerList() //Updated from CreateAndJoinRooms.cs
     {
-        JoinedPlayerList = RoomInfoList.RI.JoinedPlayerList;
-        view.RPC("UpdatePlayerListTMP", RpcTarget.AllBuffered);
-    }
+        if (playerListTMP == null)
+            playerListTMP = GetComponent<TextMeshProUGUI>();
 
-    [PunRPC]
-    private void UpdatePlayerListTMP()
-    {
-        int length = JoinedPlayerList.Count;
-        string list = "";
-        for (int i = 0; i < length; i++)
+        playerListTMP.text = "Joined Players:" + "\n";
+
+        foreach (Player p in PhotonNetwork.PlayerList)
         {
-            list = list + "\n" + JoinedPlayerList[i];
+            string list = p.NickName.ToString();
+            JoinedPlayerList.Add(list);
+            playerListTMP.text += list +"\n";
+            Debug.Log("PlayerListTMP: added: " + list);
+
         }
-        playerListTMP.SetText(list);
+        
+        //RoomInfoList.RI.JoinedPlayerList = JoinedPlayerList;
+
     }
+
 
 
 }
