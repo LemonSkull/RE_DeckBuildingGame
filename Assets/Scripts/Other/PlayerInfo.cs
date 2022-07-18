@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
-using Photon.Realtime;
+//using Photon.Realtime;
 
 
-public class PlayerInfo : MonoBehaviourPunCallbacks //SINGLETON
+public class PlayerInfo : MonoBehaviour //SINGLETON
 {
-    public int playerNumber;
-    public string id;
+    [SerializeField] private int playerID; //PhotonNetwork ActorNumber
     public int myCharacterCard;
     private SpriteRenderer rend;
 
@@ -22,7 +21,7 @@ public class PlayerInfo : MonoBehaviourPunCallbacks //SINGLETON
         isHost = false;
 
         string currentScene = SceneManager.GetActiveScene().name;
-        if(currentScene=="Game"||currentScene == "LobbyRoom")
+        //if(currentScene=="Game"||currentScene == "LobbyRoom")
             DontDestroyOnLoad(this.gameObject);
 
         rend = GetComponent<SpriteRenderer>();
@@ -39,12 +38,11 @@ public class PlayerInfo : MonoBehaviourPunCallbacks //SINGLETON
         }
 
     }
-    public void WhenIsCreated(bool ishost, int playernumb)
+    public void WhenInstanceIsCreated(int _playerID)
     {
-            playerNumber = playernumb;
-            isHost = ishost;
-
-
+        Debug.Log("PlayerInfo created for playerID: " +_playerID);
+        playerID = _playerID;
+        myCharacterCard = _playerID;
     }
 
 

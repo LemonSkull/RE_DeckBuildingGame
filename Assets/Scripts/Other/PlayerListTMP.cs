@@ -12,15 +12,18 @@ public class PlayerListTMP : MonoBehaviourPun
     public List<string> JoinedPlayerList;
     private string JoinedPlayers;
     //private PhotonView view;
+    public bool destroyOnLoad;
 
     void Awake()
     {
         //MainCanvas = GameObject.FindWithTag("MainCanvas");
         playerListTMP = GetComponent<TextMeshProUGUI>();
-        
+        if(!destroyOnLoad)
+            DontDestroyOnLoad(this.gameObject);
     }
     void Start()
     {
+        UpdatePlayerList();
         //view = GetComponent<PhotonView>();
 
     }

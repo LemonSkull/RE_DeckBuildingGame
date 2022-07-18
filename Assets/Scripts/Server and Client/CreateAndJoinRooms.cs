@@ -16,8 +16,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     public GameObject PlayerInfoPrefab;
     public GameObject LobbyRoomControlPrefab;
     public GameObject PlayerListTMP;
-
-    private string currentScene, nickName;
+    [SerializeField] private bool isHost;
+    private string currentScene;
 
     private PhotonView view;
 
@@ -31,10 +31,14 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         if(view.IsMine)
         {
-            nickName = PlayerPrefs.GetString("NickName");
+            string nickName = PlayerPrefs.GetString("NickName");
             PhotonNetwork.NickName = nickName;
 
         }
+        isHost = PhotonNetwork.IsMasterClient;
+
+        if (currentScene == "Game")
+            PhotonNetwork.CurrentRoom.IsOpen=false;
 
 
     }
@@ -51,12 +55,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         Debug.Log("OnCreatedRoom");
 
-        if (PlayerListTMP != null)
-            PlayerListTMP.GetComponent<PlayerListTMP>().UpdatePlayerList();
-        else
-            Debug.Log("PlayerListTMP = null");
-
-
+        UpdateJoinedPlayerList();
     }
 
     public override void OnJoinedRoom()
@@ -69,22 +68,35 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         Debug.Log(newPlayer +" OnPlayerEnteredRoom");
 
-        if (LobbyRoomControlPrefab!=null)
-                LobbyRoomControlPrefab.GetComponent<LobbyOpen>().AddNewPlayerInfoPrefab(false);
-            
+
+            UpdateJoinedPlayerList();
+
         //string player = newPlayer.ToStringFull();
         //base.photonView.TransferOwnership(newPlayer);
-        
+
+    }
+
+    private void UpdateJoinedPlayerList()
+    {
+        if(view!=null)
+            view.RPC("RPCUpdateJoinedPlayers", RpcTarget.AllBuffered);
+
+    }
+    [PunRPC]
+    private void RPCUpdateJoinedPlayers()
+    {
+        if (PlayerListTMP != null)
+            PlayerListTMP.GetComponent<PlayerListTMP>().UpdatePlayerList();
+
+        if (LobbyRoomControlPrefab != null)
+            LobbyRoomControlPrefab.GetComponent<LobbyRoomOpen>().AddNewPlayerInfoPrefab();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Debug.Log(otherPlayer + " Left Room");
 
-        if (PlayerListTMP != null)
-            PlayerListTMP.GetComponent<PlayerListTMP>().UpdatePlayerList();
-        else
-            Debug.Log("PlayerListTMP = null");
+        UpdateJoinedPlayerList();
     }
 
 }

@@ -6,7 +6,7 @@ using Photon.Pun;
 public class SpawnCards : MonoBehaviour
 {
     public int cardCount, handCards;
-    public GameObject CardPrefab, PNCardPrefab, PlayerDeck;
+    public GameObject CardPrefab, PNCardPrefab, PlayerDeck, HandCardsParent;
     //public GameObject ItemCards;
     public List<GameObject> Deck;
     public List<GameObject> HandCards;
@@ -24,13 +24,13 @@ public class SpawnCards : MonoBehaviour
             cardCount++;
             Deck.Add(child.gameObject);
         }
-
+        HandCardsParent = GameObject.FindWithTag("HandCardsParent");
         
     }
     void Start()
     {
         view = GetComponent<PhotonView>();
-        currentCard = "ammo10";
+        currentCard = "ammo10"; //TESTINGGGGGGG
     }
 
     public void DrawCard() //Button
@@ -53,27 +53,59 @@ public class SpawnCards : MonoBehaviour
             }
 
             pos = new Vector2(posX += 1.5f, posY);
-
             
             GameObject cardSpawn = CardPrefab;
             var render = Deck[0].GetComponent<SpriteRenderer>().sprite;
+            GameObject card = PhotonNetwork.Instantiate(cardSpawn.name, pos, Quaternion.identity);
+            //card.transform.parent = HandCardsParent.transform; //SHOWS USELESS WARNING IN DEBUG????
+            card.transform.SetParent(HandCardsParent.transform, false);
 
-            //cardSpawn.GetComponent<SpriteRenderer>().sprite = render;
-            //Instantiate(cardSpawn, pos, Quaternion.identity);
-            //PhotonNetwork.InstantiateRoomObject(cardSpawn.name, pos, Quaternion.identity);
-            PhotonNetwork.Instantiate(cardSpawn.name, pos, Quaternion.identity);
-            /*
-            GameObject cardSpawn = ItemCards;
-
-            //cardSpawn.GetComponent<SpriteFromAtlas>().SetCardSprite("FirstAidKit");
-
-            //cardSpawn.transform.SetParent(GameObject.Find("MainCanvas").transform);
-            PhotonNetwork.InstantiateRoomObject(cardSpawn.name, pos, Quaternion.identity);
-            */
             cardCount--;
             Deck.Remove(Deck[0]);
         }
+        if(Deck.Count==0)
+        {
+            foreach (GameObject c in DiscardPileCards)
+            {
+                Deck.Add(c);
+
+            }
+            DiscardPileCards.Clear();
+            Debug.Log("Shuffling Deck !");
+        }
     }
+
+    public void PutHandCardsToDiscardPile()
+    {
+        Debug.Log("DiscardPileActivated");
+
+        int i = 0;
+        foreach(GameObject c in HandCards)
+        {
+            DiscardPileCards.Add(c);
+            
+        }
+        HandCards.Clear();
+
+        foreach (Transform child in HandCardsParent.transform)
+        {
+            PhotonNetwork.Destroy(child.gameObject);
+        }
+        handCards = 0;
+        posX = -5; posY = -2;
+        //view.RPC("DeleteCards", RpcTarget.AllBuffered);
+    }
+    [PunRPC]
+    public void DeleteCards()
+    {
+        if(view.IsMine)
+        foreach (GameObject c in DiscardPileCards)
+        {
+            PhotonNetwork.Destroy(c);
+
+        }
+    }
+
 
     public GameObject SpawnPNCardPrefab(GameObject other, Vector2 pos)
     {

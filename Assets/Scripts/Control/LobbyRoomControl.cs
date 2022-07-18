@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class MenuController : MonoBehaviour
+public class LobbyRoomControl : MonoBehaviourPunCallbacks
 {
+
+
+    void Start()
+    { }
+    
     /*
     public GameObject PlayerInfoObj;//TEST
 
@@ -23,11 +30,6 @@ public class MenuController : MonoBehaviour
         PlayerPrefs.SetInt("MyCharacterCard", val);
     }
     */
-    public void OnClickGoToGameScene()
-    {
-        //int allCharCount = PlayerInfoObj.GetComponent<PlayerInfo>().allCharacters.Count;
 
-        //ChooseRandomCharacterCard(allCharCount);//TEST
-        SceneManager.LoadScene("Game");
-    }
+
 }

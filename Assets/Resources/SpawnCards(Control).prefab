@@ -50,6 +50,7 @@ MonoBehaviour:
   CardPrefab: {fileID: 3658572025674238614, guid: d67348666da207f48ba84e3558ff649d, type: 3}
   PNCardPrefab: {fileID: 3658572025674238614, guid: d67348666da207f48ba84e3558ff649d, type: 3}
   PlayerDeck: {fileID: 8777308679630463889, guid: 0967153f86a57a84a89b3efe121a9f06, type: 3}
+  HandCardsParent: {fileID: 0}
   Deck: []
   HandCards: []
   DiscardPileCards: []

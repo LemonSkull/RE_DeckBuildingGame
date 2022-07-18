@@ -55,6 +55,11 @@ MonoBehaviour:
   - SendNewPlayerInfo
   - SetPhotonView
   - UpdatePlayerListWithOthers
+  - GoToGameScene
+  - RPCUpdateJoinedPlayers
+  - PunTransferOwnershipToNextPlayer
+  - RPCDestroyCards
+  - DeleteCards
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
