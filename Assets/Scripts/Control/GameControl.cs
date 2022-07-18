@@ -8,10 +8,11 @@ using UnityEngine.UI; //DEBUGGING
 public class GameControl : MonoBehaviourPunCallbacks
 {
     PhotonView view;
-    public GameObject SpawnCardsPrefab;
+    public GameObject SpawnCardsPrefab, UIGameControl, CharacterControl;
     private GameObject MainSpawnCards;
     public int currentPlayerID;
     public Text currentPlayer; //DEBUGGING
+    private string currentPlayerName;
 
     [SerializeField] private int whoIsPlaying, playerCount; //IN USE
 
@@ -19,11 +20,21 @@ public class GameControl : MonoBehaviourPunCallbacks
     void Awake()
     {
         view = GetComponent<PhotonView>();
-        currentPlayerID = view.ViewID;
+        
         MainSpawnCards = PhotonNetwork.Instantiate(SpawnCardsPrefab.name, new Vector3(0f,0f,0f), Quaternion.identity);
+    }
+    void Start()
+    {
+        currentPlayerID = view.ViewID;
+        CharacterControl.GetComponent<CharacterControl>().SetCharacterCardByID();
 
-        if(PhotonNetwork.IsMasterClient)
-            ShowCurrentPlayer(PhotonNetwork.NickName);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            currentPlayerName = PhotonNetwork.NickName;
+            ShowCurrentPlayer(currentPlayerName);
+        }
+        string hostName = PhotonNetwork.PlayerList[0].NickName;
+        UIGameControl.GetComponent<GameUIControl>().UIPlayerNextTurnStart(hostName, currentPlayerID);
     }
 
     public void OnClickDrawCard()
@@ -48,9 +59,10 @@ public class GameControl : MonoBehaviourPunCallbacks
 
         if (view.IsMine)
         {
-            view.RPC("PunTransferOwnershipToNextPlayer", RpcTarget.AllBuffered);
-        }
             
+            view.RPC("PunTransferOwnershipToNextPlayer", RpcTarget.AllBuffered);
+            
+        }
 
     }
     [PunRPC]
@@ -60,7 +72,7 @@ public class GameControl : MonoBehaviourPunCallbacks
 
         //currentPlayerID = view.ViewID;
 
-        if (currentPlayerID == playerCount)
+        if (currentPlayerID >= playerCount)
             currentPlayerID = 1;
         else
             currentPlayerID++;
@@ -70,14 +82,16 @@ public class GameControl : MonoBehaviourPunCallbacks
 
         view.TransferOwnership(_player);
         Debug.Log("View transfered to: " + _player + "    Player count: " + playerCount);
-        Debug.Log("CurrentPlayerID: " + currentPlayerID);
 
-        string name = _player.NickName;
-        ShowCurrentPlayer(name);
+        currentPlayerName = _player.NickName;
+        ShowCurrentPlayer(currentPlayerName);
+
+        UIGameControl.GetComponent<GameUIControl>().UIPlayerNextTurnStart(currentPlayerName, currentPlayerID);
     }
 
     public void ShowCurrentPlayer(string name)//DEBUGGING
     {
         currentPlayer.text = "Now Playing: " +name;
     }
+
 }

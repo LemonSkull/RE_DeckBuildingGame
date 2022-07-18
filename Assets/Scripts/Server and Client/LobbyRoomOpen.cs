@@ -12,18 +12,20 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
     [SerializeField] List<GameObject> playerInfoList;
     public int joinedPlayerCount;
     public GameObject startGame_btn;
+    private bool isMaster;
+    Vector2 playerInfoPos = new Vector2(-6.9f, -1.6f);
     PhotonView view;
 
     void Start()
     {
         view = GetComponent<PhotonView>();
-
-        if (playerInfoList.Count == 0)
+        isMaster = PhotonNetwork.IsMasterClient;
+        //if (isMaster)
         {
             int hostID = 1;//Host is always ActorNumber 1!
             joinedPlayerCount++;
-
-            GameObject player = Instantiate(PlayerInfoPrefab, new Vector2(0f, 0f), Quaternion.identity);
+            
+            GameObject player = Instantiate(PlayerInfoPrefab, playerInfoPos, Quaternion.identity);
             joinedPlayerCount = 1;
             playerInfoList.Add(player);
             player.GetComponent<PlayerInfo>().WhenInstanceIsCreated(hostID);
@@ -34,21 +36,23 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
                 startGame_btn.SetActive(false);
     }
 
-    public void AddNewPlayerInfoPrefab()
+    public void AddNewPlayerInfoPrefab() //When player enters room (CreateAndJoinRooms.cs)
     {
-        joinedPlayerCount = 0;
-        foreach (Player p in PhotonNetwork.PlayerList)
+        //if (isMaster)
         {
-            joinedPlayerCount++;
+            joinedPlayerCount = 0;
+            foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                joinedPlayerCount++;
+            }
+            int count = joinedPlayerCount - 1;
+            int _playerID = PhotonNetwork.PlayerList[count].ActorNumber;
+
+            GameObject player = Instantiate(PlayerInfoPrefab, playerInfoPos, Quaternion.identity);
+            playerInfoList.Add(player);
+            player.GetComponent<PlayerInfo>().WhenInstanceIsCreated(_playerID);
+
         }
-        int count = joinedPlayerCount - 1;
-        int _playerID = PhotonNetwork.PlayerList[count].ActorNumber;
-
-        GameObject player = Instantiate(PlayerInfoPrefab, new Vector2(0f, 0f), Quaternion.identity);
-        playerInfoList.Add(player);
-        player.GetComponent<PlayerInfo>().WhenInstanceIsCreated(_playerID);
-
-
         //PhotonNetwork.InstantiateRoomObject(PlayerInfoPrefab.name, new Vector2(0f, 0f), Quaternion.identity);
     }
 

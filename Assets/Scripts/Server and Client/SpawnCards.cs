@@ -14,7 +14,8 @@ public class SpawnCards : MonoBehaviour
 
     public string currentCard;
 
-    float posX = -5, posY = -2;
+    float startPosX = -3f, startPosY = -1.8f;
+    float posX, posY;
     PhotonView view;
 
     void Awake()
@@ -30,6 +31,7 @@ public class SpawnCards : MonoBehaviour
     void Start()
     {
         view = GetComponent<PhotonView>();
+        posX = startPosX; posY = startPosY;
         currentCard = "ammo10"; //TESTINGGGGGGG
     }
 
@@ -41,15 +43,20 @@ public class SpawnCards : MonoBehaviour
             HandCards.Add(Deck[0]);
 
             Vector2 pos;
-            if(posX>6f&& posY==-2)
+            if(posX>6f&& posY== startPosY) //Change row
             {
-                posX = -5;
+                posX = -3.2f;
                 posY = -3.5f;
             }
-            else if (posX>6&& posY==-4)
+            else if (posX>6&& posY==-4) //Change row
             {
-                posX = -3.5f;
-                posY = -2;
+                posX = startPosX;
+                posY = startPosY;
+            }
+            else if (posX>6)
+            {
+                posX = startPosX;
+                posY = startPosY;
             }
 
             pos = new Vector2(posX += 1.5f, posY);
@@ -79,7 +86,6 @@ public class SpawnCards : MonoBehaviour
     {
         Debug.Log("DiscardPileActivated");
 
-        int i = 0;
         foreach(GameObject c in HandCards)
         {
             DiscardPileCards.Add(c);
@@ -92,7 +98,7 @@ public class SpawnCards : MonoBehaviour
             PhotonNetwork.Destroy(child.gameObject);
         }
         handCards = 0;
-        posX = -5; posY = -2;
+        posX = startPosX; posY = startPosY;
         //view.RPC("DeleteCards", RpcTarget.AllBuffered);
     }
     [PunRPC]

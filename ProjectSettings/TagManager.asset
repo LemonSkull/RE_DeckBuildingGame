@@ -21,6 +21,7 @@ TagManager:
   - PlayerInfoMaster
   - HandCard
   - HandCardsParent
+  - UITurnHandler
   layers:
   - Default
   - TransparentFX

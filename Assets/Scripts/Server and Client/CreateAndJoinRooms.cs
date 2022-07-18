@@ -78,7 +78,11 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     private void UpdateJoinedPlayerList()
     {
-        if(view!=null)
+        if(isHost)
+            LobbyRoomControlPrefab.GetComponent<LobbyRoomOpen>().AddNewPlayerInfoPrefab();
+
+
+        if (view!=null)
             view.RPC("RPCUpdateJoinedPlayers", RpcTarget.AllBuffered);
 
     }
@@ -88,8 +92,6 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         if (PlayerListTMP != null)
             PlayerListTMP.GetComponent<PlayerListTMP>().UpdatePlayerList();
 
-        if (LobbyRoomControlPrefab != null)
-            LobbyRoomControlPrefab.GetComponent<LobbyRoomOpen>().AddNewPlayerInfoPrefab();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

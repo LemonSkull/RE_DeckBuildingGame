@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3585181069486544914}
   - component: {fileID: 3585181069486544915}
   - component: {fileID: 567827490546551723}
+  - component: {fileID: 7170056989879587491}
   m_Layer: 0
   m_Name: PlayerInfo(Singleton)
   m_TagString: PlayerInfo
@@ -45,11 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4b9fc8b78fbdb4789849e7fb224b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
-  id: 
+  playerID: 0
   myCharacterCard: 0
   isHost: 0
-  allCharacters: []
   PlayableCharactersObject: {fileID: 3853105795802087178, guid: a98dfbdd988b3bc4ebc854ee42da952e, type: 3}
 --- !u!212 &567827490546551723
 SpriteRenderer:
@@ -92,14 +91,37 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 51a62b8a36996dc4cba32bf42f20e0d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.45, y: 3.475}
+  m_Size: {x: 4.9, y: 6.95}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7170056989879587491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585181069486544940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 0}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
