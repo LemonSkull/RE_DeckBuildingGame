@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4b9fc8b78fbdb4789849e7fb224b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterCardPrefab: {fileID: 6805244748032663362, guid: dda99378e5304b746ba869d3dc78abce, type: 3}
   playerID: 0
   myCharacterCard: 0
   isHost: 0
@@ -120,8 +121,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 0}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

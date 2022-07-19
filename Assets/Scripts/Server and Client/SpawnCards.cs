@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class SpawnCards : MonoBehaviour
+public class SpawnCards : MonoBehaviourPunCallbacks
 {
     public int cardCount, handCards;
-    public GameObject CardPrefab, PNCardPrefab, PlayerDeck, HandCardsParent;
+    public GameObject PNCardPrefab, PlayerDeck, CharacterCardPrefab, CharacterCardListPrefab;
+    private GameObject HandCardsParent;
     //public GameObject ItemCards;
     public List<GameObject> Deck;
     public List<GameObject> HandCards;
     public List<GameObject> DiscardPileCards;
 
-    public string currentCard;
+    public GameObject[] PlayerInfoList;
+    public List<string> CharacterCards;
+
+    public string currentCard, characterCard;
 
     float startPosX = -3f, startPosY = -1.8f;
     float posX, posY;
@@ -20,19 +25,21 @@ public class SpawnCards : MonoBehaviour
 
     void Awake()
     {
+        view = GetComponent<PhotonView>();
         foreach (Transform child in PlayerDeck.transform)
         {
             cardCount++;
             Deck.Add(child.gameObject);
         }
+
         HandCardsParent = GameObject.FindWithTag("HandCardsParent");
-        
-    }
-    void Start()
-    {
-        view = GetComponent<PhotonView>();
         posX = startPosX; posY = startPosY;
-        currentCard = "ammo10"; //TESTINGGGGGGG
+        //if (view.IsMine)
+        //CreateCharacterCard();
+
+        PlayerInfoList = GameObject.FindGameObjectsWithTag("PlayerInfo");
+        GetHandCardSpriteData();
+        //GetPlayerInfoAndCharacterCards();
     }
 
     public void DrawCard() //Button
@@ -61,11 +68,13 @@ public class SpawnCards : MonoBehaviour
 
             pos = new Vector2(posX += 1.5f, posY);
             
-            GameObject cardSpawn = CardPrefab;
+            GameObject cardSpawn = PNCardPrefab;
             var render = Deck[0].GetComponent<SpriteRenderer>().sprite;
             GameObject card = PhotonNetwork.Instantiate(cardSpawn.name, pos, Quaternion.identity);
-            //card.transform.parent = HandCardsParent.transform; //SHOWS USELESS WARNING IN DEBUG????
             card.transform.SetParent(HandCardsParent.transform, false);
+            //card.GetComponent<SpriteFromAtlas>().spriteName = currentCard; //Sets currentCard for spawned card!
+            //card.GetComponent<SpriteFromAtlas>().isVisible = true;
+            card.GetComponent<SpriteFromAtlas>().SetHandCardSpriteVisibility(true);
 
             cardCount--;
             Deck.Remove(Deck[0]);
@@ -81,6 +90,27 @@ public class SpawnCards : MonoBehaviour
             Debug.Log("Shuffling Deck !");
         }
     }
+    private void GetHandCardSpriteData()
+    {
+        currentCard = "ammo30"; //TESTINGGGGGGG
+    }
+
+    public void CreateCharacterCard(int count)
+    {
+        //characterCard = PlayerPrefs.GetString("MyCharacterCard");
+        GameObject pInfo = PlayerInfoList[count];
+        string cardName = pInfo.GetComponent<PlayerInfo>().myCharacterCard;
+        CharacterCards.Add(cardName);
+        characterCard = cardName;
+
+        Vector2 characterCardPos = new Vector3(-301.9f, -80.7f, 0f);
+        GameObject parent = GameObject.FindWithTag("MainCanvas");
+
+        GameObject card = PhotonNetwork.Instantiate(CharacterCardPrefab.name, characterCardPos, Quaternion.identity);
+        card.transform.SetParent(parent.transform, false);
+
+    }
+
 
     public void PutHandCardsToDiscardPile()
     {

@@ -61,6 +61,14 @@ MonoBehaviour:
   - RPCDestroyCards
   - DeleteCards
   - RPCSetCharacterByID
+  - SetHandCardVisible
+  - SetCardSprite
+  - AddCharacterCardsToAllPlayers
+  - SetPlayerCardsAndGoToGameScene
+  - CreateCharacterCard
+  - GetCharacterCards
+  - CreateCharacterCards
+  - SendCharacterCardNames
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

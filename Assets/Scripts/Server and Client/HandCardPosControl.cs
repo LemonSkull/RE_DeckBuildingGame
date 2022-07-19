@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class ShowCardToOthers : MonoBehaviour
+public class HandCardPosControl : MonoBehaviour
 {
     private Camera cam;
     PhotonView view;
@@ -49,14 +49,6 @@ public class ShowCardToOthers : MonoBehaviour
         */
     }
 
-
-
-
-
-
-
-
-
     void OnMouseDrag()
     {
         transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
@@ -74,8 +66,6 @@ public class ShowCardToOthers : MonoBehaviour
 
 
     }
-
-
 
     public void ChangePosition(Vector2 pos)
     {

@@ -78,8 +78,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     private void UpdateJoinedPlayerList()
     {
-        if(isHost)
-            LobbyRoomControlPrefab.GetComponent<LobbyRoomOpen>().AddNewPlayerInfoPrefab();
+        //if(isHost)
+            //LobbyRoomControlPrefab.GetComponent<LobbyRoomOpen>().AddNewPlayerInfoPrefab();
 
 
         if (view!=null)

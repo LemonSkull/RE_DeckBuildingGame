@@ -7,29 +7,18 @@ using Photon.Realtime;
 
 public class LobbyRoomControl : MonoBehaviourPunCallbacks
 {
-
-
-    void Start()
-    { }
+    public GameObject CharacterList;
     
-    /*
-    public GameObject PlayerInfoObj;//TEST
-
-    public void OnClickChooseCharacterCard(int whichCharacter)
+    void Start() //DELETE ALL
     {
-        if(PlayerInfo.PI !=null)
-        {
-            PlayerInfo.PI.myCharacterCard = whichCharacter;
-            PlayerPrefs.SetInt("MyCharacterCard", whichCharacter);
-        }
-    }
 
-    public void ChooseRandomCharacterCard(int maxCharacters)
-    {
-        int val = Random.Range(0, maxCharacters);
-        PlayerPrefs.SetInt("MyCharacterCard", val);
+
+        string myCharacter = CharacterList.GetComponent<TextFileToList>().GetRandomLineFromList();
+        PlayerPrefs.SetString("MyCharacterCard", myCharacter);
+
+        Debug.Log("My character is:" + myCharacter);
     }
-    */
+    
 
 
 }

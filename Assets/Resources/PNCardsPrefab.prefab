@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3658572025674238610}
   - component: {fileID: 3658572025674238611}
   - component: {fileID: 3658572025674238608}
-  - component: {fileID: -8796945498526252787}
   - component: {fileID: -941808052705771647}
   - component: {fileID: 972305381964930487}
   - component: {fileID: 4573130496020473065}
   - component: {fileID: 4236684501794976240}
   - component: {fileID: 2139178586207394313}
+  - component: {fileID: 1010337587590636306}
   m_Layer: 5
   m_Name: PNCardsPrefab
   m_TagString: HandCard
@@ -97,20 +97,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atlas: {fileID: 4343727234628468602, guid: 81916d546185a98488668dd885f759ec, type: 2}
   spriteName: 
---- !u!114 &-8796945498526252787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3658572025674238614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ad3cdd4980281f4ea734e9822c40a7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentObject: {fileID: 0}
-  MainCanvas: {fileID: 0}
+  isVisible: 0
+  isCharacterCard: 0
 --- !u!114 &-941808052705771647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,3 +259,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f365e7abe69afb49bf3cd7072e5e9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1010337587590636306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3658572025674238614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ad3cdd4980281f4ea734e9822c40a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentObject: {fileID: 0}
+  MainCanvas: {fileID: 0}

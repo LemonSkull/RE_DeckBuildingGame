@@ -15,42 +15,30 @@ public class Drag : MonoBehaviour
     private Vector2 cardPosition;
     [SerializeField]
     private Vector2 lastPos;
-    private bool isVisible;
+    private bool isCardVisibleToOthers;
     //[SerializeField] //DEBUG
-    private float minX = -8.5f, maxX = 8.5f, minY = -4.5f, maxY = 4.5f, pnLimitY = -2f;
+    private float minX = -8.5f, maxX = 8.5f, minY = -4.5f, maxY = 4.5f, pnLimitY = -0.5f;
 
     void Awake()
     {
-        if(canvas == null)
+        //if (canvas == null)
         {
             //canvas = GetComponent<ShowCardToOthers>().MainCanvas;
             //GameObject canvasObj = GameObject.FindWithTag("MainCanvas");
-            MainCanvas = gameObject.transform.parent.gameObject;
+            //MainCanvas = gameObject.transform.parent.gameObject;
+            MainCanvas = GameObject.FindWithTag("MainCanvas");
             canvas = MainCanvas.GetComponent<Canvas>();
             Debug.Log("MainCanvas =" + MainCanvas + "inDrag.cs");
         }
+        isCardVisibleToOthers = false;
     }
     void Start()
     {
+
+
         view = GetComponent<PhotonView>();
         lastPos = transform.position;
 
-        //view = PhotonView.Find(1); //MainCanvas -> error when pointerExit;
-
-        isVisible = true;
-
-        /* //NOT IN USE RN
-        if (view.IsMine)
-        {
-            isVisible = true;
-        }
-            
-        else
-        {
-            isVisible = false;
-            GetComponent<Image>().color = new Color32(0, 0, 0, 100);
-        }
-        */
         cardPosition = transform.position;
     }
 
@@ -92,15 +80,6 @@ public class Drag : MonoBehaviour
             transform.position = lastPos;
 
         }
-        else if (!isVisible) //Instantiate PNPrefab (other players see it)
-        {
-            if (cardPosition.y >= pnLimitY)
-            {
-                
-                //view.RPC("changeImage", PhotonTargets);
-                //view.RPC("RPC_ChangeImage", RpcTarget.AllBuffered);
-            }
-        }
 
         lastPos = transform.position;
         view.RPC("RPC_PointerExit", RpcTarget.AllBuffered);
@@ -110,15 +89,28 @@ public class Drag : MonoBehaviour
     public void RPC_PointerExit()
     {
         transform.position = lastPos;
+
+        if (!isCardVisibleToOthers)
+            if (lastPos.y >= pnLimitY) //When card crosses "visibility line" pnLimitY
+                view.RPC("SetHandCardVisible", RpcTarget.AllBuffered);
+    }
+
+    [PunRPC]
+    public void SetHandCardVisible()
+    {
+        GetComponent<SpriteFromAtlas>().SetHandCardSpriteVisibility(true);
+        isCardVisibleToOthers = true;
+        Debug.Log("Card is now visible to others!");
     }
 
 
+    /*
     [PunRPC]
     public void RPC_ChangeImage()
     {
         //GetComponent<Image>().color = new Color32(255, 255, 255, 255);
 
         GetComponent<SpriteFromAtlas>().SetCardSpriteVisible();
-    }
+    }*/
 }
 

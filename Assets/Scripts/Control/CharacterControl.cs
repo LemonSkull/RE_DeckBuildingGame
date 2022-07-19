@@ -14,28 +14,6 @@ public class CharacterControl : MonoBehaviourPun
     bool isZoomed;
     [SerializeField] private PhotonView view;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        view = MainCanvas.GetComponent<PhotonView>();
-        isZoomed = false;
-        PlayerCharacters = GameObject.FindGameObjectsWithTag("PlayerInfo");
-
-        foreach(GameObject o in PlayerCharacters)
-        {
-            Sprite sprt = o.GetComponent<SpriteRenderer>().sprite;
-            CharacterSprites.Add(sprt);
-        }
-
-
-    }
-    public void SetCharacterCardByID()
-    {
-        int id = view.ViewID;
-        GetComponent<Image>().sprite = CharacterSprites[id - 1];
-
-    }
-
     public void OnClickZoomCard()
     {
         if (isZoomed)
