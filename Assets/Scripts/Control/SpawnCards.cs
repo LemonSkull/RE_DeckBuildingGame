@@ -7,7 +7,7 @@ using Photon.Realtime;
 public class SpawnCards : MonoBehaviourPunCallbacks
 {
     public int cardCount, handCards;
-    public GameObject PNCardPrefab, PlayerDeck, CharacterCardPrefab, CharacterCardListPrefab;
+    public GameObject PNCardPrefab, PlayerDeck, CharacterCardPrefab;
     private GameObject HandCardsParent;
     //public GameObject ItemCards;
     public List<GameObject> Deck;
@@ -16,16 +16,17 @@ public class SpawnCards : MonoBehaviourPunCallbacks
 
     public GameObject[] PlayerInfoList;
     public List<string> CharacterCards;
-
     public string currentCard, characterCard;
 
     float startPosX = -3f, startPosY = -1.8f;
     float posX, posY;
     PhotonView view;
+    private bool isMaster;
 
     void Awake()
     {
         view = GetComponent<PhotonView>();
+        isMaster = PhotonNetwork.IsMasterClient;
         foreach (Transform child in PlayerDeck.transform)
         {
             cardCount++;
@@ -40,6 +41,12 @@ public class SpawnCards : MonoBehaviourPunCallbacks
         PlayerInfoList = GameObject.FindGameObjectsWithTag("PlayerInfo");
         GetHandCardSpriteData();
         //GetPlayerInfoAndCharacterCards();
+
+        //if (PhotonNetwork.IsMasterClient)
+            //PhotonNetwork.Instantiate(CharacterCardListPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
+
+        //if (isMaster)
+            //CreateCharacterCard();
     }
 
     public void DrawCard() //Button
@@ -94,21 +101,27 @@ public class SpawnCards : MonoBehaviourPunCallbacks
     {
         currentCard = "ammo30"; //TESTINGGGGGGG
     }
-
-    public void CreateCharacterCard(int count)
+    float test = 1f;
+    public void CreateCharacterCard(string cardName) //Not in use
     {
+        int count = PhotonNetwork.CurrentRoom.PlayerCount;
+        //GameObject charCard = GameObject.FindWithTag("CurrentCharacterCardsList");
         //characterCard = PlayerPrefs.GetString("MyCharacterCard");
-        GameObject pInfo = PlayerInfoList[count];
-        string cardName = pInfo.GetComponent<PlayerInfo>().myCharacterCard;
-        CharacterCards.Add(cardName);
-        characterCard = cardName;
+        for (int i = 0; i < count; i++)
+        {          
+            //string cardName = pInfo.GetComponent<PlayerInfo>().myCharacterCard;
+            CharacterCards.Add(cardName);
+            characterCard = cardName;
 
-        Vector2 characterCardPos = new Vector3(-301.9f, -80.7f, 0f);
-        GameObject parent = GameObject.FindWithTag("MainCanvas");
-
-        GameObject card = PhotonNetwork.Instantiate(CharacterCardPrefab.name, characterCardPos, Quaternion.identity);
-        card.transform.SetParent(parent.transform, false);
-
+            Vector2 characterCardPos = new Vector3(-301.9f*test, -80.7f, 0f);
+            GameObject parent = GameObject.FindWithTag("MainCanvas");
+            int id = view.OwnerActorNr - 1;
+            GameObject card = PhotonNetwork.Instantiate(CharacterCardPrefab.name, characterCardPos, Quaternion.identity);
+            card.transform.SetParent(parent.transform, false);
+            card.GetComponent<SpriteFromAtlas>().characterName = cardName;
+            test *= -1f;
+        }
+        //PhotonNetwork.Destroy(charCard);
     }
 
 

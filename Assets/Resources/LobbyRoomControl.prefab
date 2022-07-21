@@ -46,6 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerInfoPrefab: {fileID: 3585181069486544940, guid: ab7f85163ec85644e87e06ceebd666f8, type: 3}
+  CharacterList: {fileID: 7520148880355276384, guid: 4257ec75c8888a24fb27eeead39a5c7a, type: 3}
+  playerInfoList: []
+  joinedPlayerCount: 0
+  startGame_btn: {fileID: 0}
+  CharacterNames: []
 --- !u!114 &5780625226815275685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +67,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 0

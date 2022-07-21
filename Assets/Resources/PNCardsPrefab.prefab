@@ -97,8 +97,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atlas: {fileID: 4343727234628468602, guid: 81916d546185a98488668dd885f759ec, type: 2}
   spriteName: 
+  characterName: 
   isVisible: 0
   isCharacterCard: 0
+  characterCardNumber: 0
 --- !u!114 &-941808052705771647
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -48,9 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterCardPrefab: {fileID: 6805244748032663362, guid: dda99378e5304b746ba869d3dc78abce, type: 3}
   playerID: 0
-  myCharacterCard: 0
-  isHost: 0
-  PlayableCharactersObject: {fileID: 3853105795802087178, guid: a98dfbdd988b3bc4ebc854ee42da952e, type: 3}
+  myCharacterCard: 
+  PlayerInfoList: []
+  isMaster: 0
 --- !u!212 &567827490546551723
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 0

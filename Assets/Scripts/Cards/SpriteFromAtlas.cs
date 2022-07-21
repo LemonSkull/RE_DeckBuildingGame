@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class SpriteFromAtlas : MonoBehaviour
 {
     [SerializeField] SpriteAtlas atlas;
-    public string spriteName;
+    public string spriteName, characterName;
     private Image image;
     private GameObject SpawnCardsPrefab;
     [SerializeField] private bool isVisible, isCharacterCard;
+    public int characterCardNumber;
 
     void Awake()
     {
@@ -23,7 +24,8 @@ public class SpriteFromAtlas : MonoBehaviour
     {
         if (isCharacterCard)
         {
-            spriteName = SpawnCardsPrefab.GetComponent<SpawnCards>().characterCard;
+            //spriteName = SpawnCardsPrefab.GetComponent<SpawnCards>().GetCharacterCardByID(characterCardNumber);
+            spriteName = characterName;
             SetHandCardSpriteVisibility(true);
         }
         else

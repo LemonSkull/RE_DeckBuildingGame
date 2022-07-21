@@ -10,7 +10,6 @@ public class GameControl : MonoBehaviourPunCallbacks
     PhotonView view;
     public GameObject SpawnCardsPrefab, UIGameControl;
     private GameObject MainSpawnCards;
-    [SerializeField] private GameObject[] PlayerInfoList;
     public int currentPlayerID;
     public Text currentPlayer; //DEBUGGING
     private string currentPlayerName;
@@ -24,9 +23,8 @@ public class GameControl : MonoBehaviourPunCallbacks
         isMaster = PhotonNetwork.IsMasterClient;
 
         MainSpawnCards = PhotonNetwork.Instantiate(SpawnCardsPrefab.name, new Vector3(0f,0f,0f), Quaternion.identity);
-
-        PlayerInfoList = GameObject.FindGameObjectsWithTag("PlayerInfo");
     }
+
     void Start()
     {
         currentPlayerID = view.ViewID;
@@ -40,47 +38,8 @@ public class GameControl : MonoBehaviourPunCallbacks
         string hostName = PhotonNetwork.PlayerList[0].NickName;
         UIGameControl.GetComponent<GameUIControl>().UIPlayerNextTurnStart(hostName, currentPlayerID);
 
-        //if (view.IsMine)
-            CreateCharacterCards();
-        //CreateCharacterCards();
-    }
-
-    public void CreateCharacterCards()
-    {
-        int count = 0;
-        foreach(GameObject o in PlayerInfoList)
-        {
-
-            //string characterName = o.GetComponent<PlayerInfo>().myCharacterCard;
-            MainSpawnCards.GetComponent<SpawnCards>().CreateCharacterCard(count);
-            count++;
-        }
-
 
     }
-    /*
-    public void SendCharacterCardNames() //T
-    {
-        GameObject[] spawnCards = GameObject.FindGameObjectsWithTag("Respawn");
-        foreach(GameObject spawn in spawnCards)
-        {
-            foreach (GameObject info in PlayerInfoList)
-            {
-                string characterName = info.GetComponent<PlayerInfo>().myCharacterCard;
-                spawn.GetComponent<SpawnCards>().CreateCharacterCard(0);
-
-            }
-
-        }
-
-
-    }
-    */
-
-
-
-
-
     public void OnClickDrawCard()
     {
         if(view.IsMine)

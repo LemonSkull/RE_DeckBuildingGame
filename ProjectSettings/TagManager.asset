@@ -22,6 +22,10 @@ TagManager:
   - HandCard
   - HandCardsParent
   - UITurnHandler
+  - CurrentCharacterCardsList
+  - isLocalPlayer
+  - isOnlinePlayer
+  - UIControl
   layers:
   - Default
   - TransparentFX

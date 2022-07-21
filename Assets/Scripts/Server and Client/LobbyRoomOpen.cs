@@ -10,86 +10,87 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
     public GameObject PlayerInfoPrefab;
     public GameObject CharacterList;
     [SerializeField] private GameObject[] playerInfoList;
-    public int joinedPlayerCount;
+    [SerializeField] private int myID;
+    [SerializeField] private int joinedPlayerCount;
+    [SerializeField] private string myCharacterCard;
     public GameObject startGame_btn;
-    private bool isMaster;
+    private bool isMaster, goToNextLevel;
     Vector2 playerInfoPos = new Vector2(-6.9f, -1.6f);
     PhotonView view;
 
+
     void Start()
     {
+        goToNextLevel = false;
         view = GetComponent<PhotonView>();
+        myID = view.OwnerActorNr;
         isMaster = PhotonNetwork.IsMasterClient;
 
-        /*
-        if (isMaster)
-        {
-            int hostID = 1;//Host is always ActorNumber 1!
-            joinedPlayerCount++;
-            
-            GameObject player = Instantiate(PlayerInfoPrefab, playerInfoPos, Quaternion.identity);
-            joinedPlayerCount = 1;
-            //playerInfoList.Add(player);
-            player.GetComponent<PlayerInfo>().WhenInstanceIsCreated(hostID);
-        }
-        */
             if(view.IsMine)
                 startGame_btn.SetActive(true);
             else
                 startGame_btn.SetActive(false);
+        
     }
-
-    public void UpdateAllPlayerInfos() //When player enters room (CreateAndJoinRooms.cs)
+    private void Update()
     {
-        if (view.IsMine)
+        if(goToNextLevel)
         {
-            joinedPlayerCount = 0;
-            foreach (Player p in PhotonNetwork.PlayerList)
+            myCharacterCard = CharacterList.GetComponent<TextFileToList>().GetRandomizedCharacterName();
+            PlayerPrefs.SetString("myCharacterCard", myCharacterCard);
+
+
+            GameObject myInfo = PhotonNetwork.Instantiate(PlayerInfoPrefab.name, playerInfoPos, Quaternion.identity);
+            //myInfo.GetComponent<PlayerInfo>().myCharacterCard = myCharacterCard;
+
+            goToNextLevel = false;
+            if (view.IsMine)
             {
-                int count = joinedPlayerCount;
-                int _playerID = PhotonNetwork.PlayerList[count].ActorNumber;
+                view.RPC("GoToGameScene", RpcTarget.AllBuffered);
 
-                GameObject player = PhotonNetwork.Instantiate(PlayerInfoPrefab.name, playerInfoPos, Quaternion.identity);
-                player.GetComponent<PlayerInfo>().WhenInstanceIsCreated(_playerID);
-
-                //PhotonView photonView = photonNetwork.Instantiate(PlayerInfoPrefab.name, transform.position, transform.rotation, 0).GetComponent();
-                //photonView.transform.gameObject.GetComponent< PlayerInfo>().PublicMethod(Values);
-
-
-                joinedPlayerCount++;
             }
         }
-        //PhotonNetwork.InstantiateRoomObject(PlayerInfoPrefab.name, new Vector2(0f, 0f), Quaternion.identity);
     }
-    [PunRPC]
-    public void GetCharacterCards()
-    {
-        playerInfoList = GameObject.FindGameObjectsWithTag("PlayerInfo");
 
-        foreach (GameObject o in playerInfoList)
-        {
-            string myCharacter = CharacterList.GetComponent<TextFileToList>().GetRandomLineFromList();
-            o.GetComponent<PlayerInfo>().myCharacterCard = myCharacter;
-            Debug.Log("My character is:" + myCharacter);
-            joinedPlayerCount++;
-        }
-
-    }
 
 
     public void OnClickGoToGameScene() //LobbyRoom Button
     {
-        UpdateAllPlayerInfos();
+        if(view.IsMine)
+        view.RPC("RPC_OnClickGoToGameScene", RpcTarget.AllBuffered);
 
-        if (view.IsMine)
-        {
-            view.RPC("GetCharacterCards", RpcTarget.AllBuffered);
-            view.RPC("SetPlayerCardsAndGoToGameScene", RpcTarget.AllBuffered);
-
-        }
     }
     [PunRPC]
-    public void SetPlayerCardsAndGoToGameScene()
+    public void RPC_OnClickGoToGameScene()
+    {
+        goToNextLevel = true;
+
+
+    }
+
+    public void UpdateAllPlayerInfos() //When player enters room (CreateAndJoinRooms.cs)
+    {
+
+        {
+            //joinedPlayerCount = 0;
+            //foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                //int count = PhotonNetwork.CurrentRoom.PlayerCount;
+                //int _playerID = PhotonNetwork.PlayerList[count].ActorNumber;
+                //PlayerInfoHold = PhotonNetwork.Instantiate(PlayerInfoPrefab.name, playerInfoPos, Quaternion.identity);
+                //PlayerInfoHold.GetComponent<PlayerInfo>().myCharacterCard = myCharacterCard;
+                //player.GetComponent<PlayerInfo>().myCharacterCard = myCharacterCard;
+                //joinedPlayerCount++;
+            }
+
+            //playerInfoList = GameObject.FindGameObjectsWithTag("PlayerInfo");
+
+            //playerInfoList[myID - 1].GetComponent<PlayerInfo>().GetCharacterSpriteName(myCharacterCard);
+        }
+    }
+
+    [PunRPC]
+    public void GoToGameScene()
     {
         SceneManager.LoadScene("Game");
     }

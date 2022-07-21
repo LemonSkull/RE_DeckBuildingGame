@@ -69,6 +69,15 @@ MonoBehaviour:
   - GetCharacterCards
   - CreateCharacterCards
   - SendCharacterCardNames
+  - UpdateAllPlayerInfos
+  - GetLocalPlayerCharacterCard
+  - SetAllCharacterCards
+  - SetCharacters
+  - RPC_OnClickGoToGameScene
+  - SendCharacterCards
+  - RPC_OnPhotonInstantiate
+  - ChatMessage
+  - SendMyCharacterCardToOthers
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

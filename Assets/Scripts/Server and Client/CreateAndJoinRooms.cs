@@ -68,22 +68,21 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         Debug.Log(newPlayer +" OnPlayerEnteredRoom");
 
+            if(PhotonNetwork.IsMasterClient)
+                UpdateJoinedPlayerList();
 
-            UpdateJoinedPlayerList();
-
-        //string player = newPlayer.ToStringFull();
-        //base.photonView.TransferOwnership(newPlayer);
 
     }
 
     private void UpdateJoinedPlayerList()
     {
-        //if(isHost)
-            //LobbyRoomControlPrefab.GetComponent<LobbyRoomOpen>().AddNewPlayerInfoPrefab();
+        //New
+        if (PlayerListTMP != null)
+            PlayerListTMP.GetComponent<PlayerListTMP>().UpdatePlayerList();
 
 
-        if (view!=null)
-            view.RPC("RPCUpdateJoinedPlayers", RpcTarget.AllBuffered);
+        //if (view!=null)
+            //view.RPC("RPCUpdateJoinedPlayers", RpcTarget.AllBuffered);
 
     }
     [PunRPC]

@@ -8,7 +8,9 @@ using System.Linq;
 public class TextFileToList : MonoBehaviour
 {
     [SerializeField] private string textFileName;
-    public List<string> TextList;
+    [SerializeField] private List<string> TextList;
+    public List<string> RandomList;
+    private int listCount;
 
     void Start()
     {
@@ -19,24 +21,29 @@ public class TextFileToList : MonoBehaviour
         {
             TextList.Add(line);
         }
+        listCount = TextList.Count;
+
     }
-
-    public int GetTextListCount()
+    public void SetRandomizedList(int playerCount)
     {
-        return TextList.Count;
-
+        for (int i = 0; i < playerCount; i++)
+        {
+            int value = Random.Range(0, listCount);
+            string name = TextList[value];
+            RandomList.Add(name);
+        }
     }
     public string GetStringFromTextByNumber(int numb)
     {
         return TextList[numb];
     }
 
-
-
-    public string GetRandomLineFromList() //NOT IN USE RN
+    public string GetRandomizedCharacterName()
     {
-        int listCount = TextList.Count;
-        int value = Random.Range(0, listCount);
+        int count = TextList.Count;
+        int value = Random.Range(0, count);
         return TextList[value];
+
     }
+
 }

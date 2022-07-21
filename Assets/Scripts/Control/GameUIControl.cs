@@ -6,8 +6,11 @@ using Photon.Pun;
 
 public class GameUIControl : MonoBehaviourPun
 {
-    public GameObject PlayerTurnUI,PlayerInfoPrefab; //Scipt = GameUIChild.cs
+    public GameObject PlayerTurnUI; //Shows current player's deck and buttons
     public TMP_Text whoIsPlaying;
+    //public GameObject[] PlayerInfoList;
+    public GameObject OtherCharacterCard;
+    
     [SerializeField] string playerName;
     public int playerID;
     //private SpriteRenderer rendPInfo;
@@ -16,11 +19,11 @@ public class GameUIControl : MonoBehaviourPun
     {
         playerID=PhotonNetwork.LocalPlayer.ActorNumber;
         whoIsPlaying.text = "";
-        //PlayerInfoPrefab = GameObject.FindWithTag("PlayerInfo");
-        //rendPInfo = PlayerInfoPrefab.GetComponent<SpriteRenderer>();
+
+        //PlayerInfoList = GameObject.FindGameObjectsWithTag("PlayerInfo");
+
+
     }
-
-
 
     public void UIPlayerNextTurnStart(string name, int id)
     {
@@ -28,11 +31,13 @@ public class GameUIControl : MonoBehaviourPun
         if (playerID == id)
         {
             PlayerTurnUI.SetActive(true);
+            OtherCharacterCard.SetActive(false);
             //rendPInfo.enabled = true;
         }
         else
         {
             PlayerTurnUI.SetActive(false);
+            OtherCharacterCard.SetActive(true);
             //rendPInfo.enabled = false;
             StartCoroutine(ShowTurnInUI());
         }

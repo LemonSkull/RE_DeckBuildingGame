@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LobbyScript : MonoBehaviour
+public class LobbyControl : MonoBehaviour
 {
     public GameObject NameEntry, JoinLobby, SaveMaster;
     public InputField setNickName;

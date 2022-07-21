@@ -149,10 +149,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 188685d6cf5c485439ea7aff4f60baa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCharacters: []
-  CharacterSprites: []
   MainCanvas: {fileID: 0}
-  view: {fileID: 0}
+  PlayerInfoList: []
+  CharacterSprites: []
+  SpriteNames: []
+  isLocalPlayer: 0
+  playerID: 0
 --- !u!114 &-1434946185778059353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,8 +169,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atlas: {fileID: 4343727234628468602, guid: c7287c7e7fba8094486dcc436b6a5df4, type: 2}
   spriteName: 
+  characterName: 
   isVisible: 1
   isCharacterCard: 1
+  characterCardNumber: 0
 --- !u!114 &7014936705865146939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +225,7 @@ MonoBehaviour:
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
   m_ScaleModel:
-    SynchronizeEnabled: 1
+    SynchronizeEnabled: 0
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
